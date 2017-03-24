@@ -1,0 +1,51 @@
+plugins {
+	id 'org.gradle.wrapper'
+	id 'org.gradle.java'
+	id 'org.gradle.war'
+	id 'idea'
+	id 'eclipse-wtp'
+	id 'org.springframework.boot' version '1.5.1.RELEASE'
+	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.7'
+}
+
+ext.querydslVersion = "4.1.4"
+
+sourceSets {
+	main {
+		java {
+			srcDir "$buildDir/generated-sources/apt"
+		}
+	}
+}
+
+querydsl {
+	library = "com.querydsl:querydsl-apt:${querydslVersion}"
+	querydslSourcesDir = "$buildDir/generated-sources/apt"
+	jpa = true
+}
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	jcenter()
+	mavenCentral()
+	maven {
+		url 'https://repo.spring.io/libs-snapshot'
+	}
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	compile('org.springframework.data:spring-data-rest-hal-browser')
+
+	compile('org.springframework.data:spring-data-envers:2.0.0.BUILD-SNAPSHOT')
+
+	compile("com.querydsl:querydsl-jpa:${querydslVersion}")
+
+	runtime('com.h2database:h2')
+	compile("org.projectlombok:lombok:1.16.12")
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
