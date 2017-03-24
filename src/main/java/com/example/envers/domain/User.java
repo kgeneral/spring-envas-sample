@@ -7,7 +7,6 @@ import org.hibernate.envers.Audited;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 @Audited
 @Entity
@@ -17,8 +16,4 @@ public class User {
     @Id @GeneratedValue
     private String userId;
     private String userName;
-
-    // DTO
-    @Transient
-    private Long historyId;
 }
